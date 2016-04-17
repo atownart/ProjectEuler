@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HighestMultiplierProvider.cs" />
+    <Compile Include="IHighestMultiplierProvider.cs" />
     <Compile Include="IPalimdromeAssertion.cs" />
+    <Compile Include="IPalindromeIdentifier.cs" />
     <Compile Include="PalindromeAssertion.cs" />
+    <Compile Include="PalindromeIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
