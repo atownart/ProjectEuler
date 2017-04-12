@@ -23,8 +23,15 @@ namespace HarryPotterKata
 
         public double Total(IDictionary<int, int> cart)
         {
-            var total = cart.Count*FullPrice;
-            return total - (total * _discountPerBook[cart.Count - 1]);
+            var total = 0d;
+            var maxAmount = cart.Max(x => x.Value);
+
+            for (var i = 1; i <= maxAmount; i++)
+            {
+                var setCount = cart.Count(book => i <= book.Value);
+                total += (setCount*FullPrice) - ((setCount*FullPrice)*_discountPerBook[setCount-1]);
+            }
+            return total;
         }
     }
 }
