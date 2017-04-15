@@ -53,7 +53,10 @@ namespace HarryPotterKata
                     set.Add(book);
                     break;
                 }
-                sets.Add(new List<int>());
+                if (setCount + 1 == sets.Count)
+                {
+                    sets.Add(new List<int>());
+                }
             }
         }
     }
