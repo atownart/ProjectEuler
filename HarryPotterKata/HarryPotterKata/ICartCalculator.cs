@@ -4,6 +4,6 @@ namespace HarryPotterKata
 {
     public interface ICartCalculator
     {
-        double Total(IDictionary<int, int> cart);
+        double Total(int[] cart);
     }
 }

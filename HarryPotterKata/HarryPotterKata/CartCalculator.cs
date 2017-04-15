@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HarryPotterKata
 {
@@ -18,20 +19,42 @@ namespace HarryPotterKata
             _discountPerBook[2] = 0.1d;//3 book
             _discountPerBook[3] = 0.2d;
             _discountPerBook[4] = 0.25d;
-
         }
 
-        public double Total(IDictionary<int, int> cart)
+        public double Total(int[] cart)
         {
-            var total = 0d;
-            var maxAmount = cart.Max(x => x.Value);
-
-            for (var i = 1; i <= maxAmount; i++)
+            var sets = new List<List<int>>();
+            sets.Add(new List<int>());
+            //put into sets
+            for (var i = 0; i < cart.Length; i++)
             {
-                var setCount = cart.Count(book => i <= book.Value);
-                total += (setCount*FullPrice) - ((setCount*FullPrice)*_discountPerBook[setCount-1]);
+                FindSetForBook(sets, cart[i]);
             }
+
+            var total = 0d;
+            //total for each set
+            foreach (var set in sets)
+            {
+                var origSetTotal = set.Count * FullPrice;
+                total += (origSetTotal) - (origSetTotal * _discountPerBook[set.Count - 1]);
+            }
+
             return total;
+        }
+
+        private void FindSetForBook(List<List<int>> sets, int book)
+        {
+            for (var setCount = 0; setCount < sets.Count; setCount++)
+            {
+                var set = sets[setCount];
+
+                if (!set.Contains(book))
+                {
+                    set.Add(book);
+                    break;
+                }
+                sets.Add(new List<int>());
+            }
         }
     }
 }
