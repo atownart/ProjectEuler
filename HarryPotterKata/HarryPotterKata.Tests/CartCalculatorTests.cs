@@ -36,6 +36,8 @@ namespace HarryPotterKata.Tests
 
         [TestCase(new int[] { 1, 1, 2 }, 23.2d)]
         [TestCase(new int[] { 1, 1, 2, 2 }, 30.4d)]
+        [TestCase(new int[] { 1, 1, 2, 3, 3, 4 }, 40.8d)]
+        [TestCase(new int[] { 1, 2, 2, 3, 4, 5 }, 38d)]
         public void Total_MultipleSets_ExpectedDiscount(int[] cart, double expectedTotal)
         {
             //Act
