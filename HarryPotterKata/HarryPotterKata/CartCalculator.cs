@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections.Generic;
 
 namespace HarryPotterKata
 {
@@ -28,36 +25,62 @@ namespace HarryPotterKata
             //put into sets
             for (var i = 0; i < cart.Length; i++)
             {
-                FindSetForBook(sets, cart[i]);
+                FindSetForBook(sets, cart[i], 0, true);
             }
 
-            var total = 0d;
+            //iterate through each book in each set 
+            //move it to the next set and get total
+            var total = TotalForSets(sets);
+
             //total for each set
-            foreach (var set in sets)
+            for (var y = 0; y < sets.Count; y++)
             {
-                var origSetTotal = set.Count * FullPrice;
-                total += (origSetTotal) - (origSetTotal * _discountPerBook[set.Count - 1]);
+                for (var x = 0; x < sets[y].Count; x++)
+                {
+                    var book = sets[y][x];
+
+                    if (FindSetForBook(sets, book, y + 1))
+                    {
+                        sets[y].RemoveAt(x);
+                    }
+
+                    var setsTotal = TotalForSets(sets);
+                    total = setsTotal < total ? setsTotal : total;
+                }
             }
 
             return total;
         }
 
-        private void FindSetForBook(List<List<int>> sets, int book)
+        private double TotalForSets(List<List<int>> sets)
         {
-            for (var setCount = 0; setCount < sets.Count; setCount++)
+            var setTotal = 0d;
+            foreach (var set in sets)
+            {
+                var origSetTotal = set.Count * FullPrice;
+                setTotal += (origSetTotal) - (origSetTotal * _discountPerBook[set.Count - 1]);
+            }
+            return setTotal;
+        }
+
+        private bool FindSetForBook(List<List<int>> sets, int book, int startingSet = 0, bool allowNewSet = false)
+        {
+            for (var setCount = startingSet; setCount < sets.Count; setCount++)
             {
                 var set = sets[setCount];
 
                 if (!set.Contains(book))
                 {
                     set.Add(book);
-                    break;
+                    return true;
                 }
-                if (setCount + 1 == sets.Count)
+
+                if (setCount + 1 == sets.Count && allowNewSet)
                 {
                     sets.Add(new List<int>());
                 }
             }
+            return false;
         }
     }
 }
