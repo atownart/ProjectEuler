@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace HarryPotterKata.Tests
 {
@@ -48,6 +47,11 @@ namespace HarryPotterKata.Tests
         }
 
         [TestCase(new int[] {1, 1, 2, 2, 3, 3, 4, 5}, 51.2d)]
+        [TestCase(new int[] { 0, 0, 0, 0, 0,
+           1, 1, 1, 1, 1,
+           2, 2, 2, 2,
+           3, 3, 3, 3, 3,
+           4, 4, 4, 4 }, 141.2d )]
         public void Total_EdgeCases_FindsCheapestTotal(int[] cart, double expectedTotal)
         {
             //Act

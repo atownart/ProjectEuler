@@ -52,6 +52,7 @@ namespace HarryPotterKata
             return total;
         }
 
+        // split out
         private double TotalForSets(List<List<int>> sets)
         {
             var setTotal = 0d;
